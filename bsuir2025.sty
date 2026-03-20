@@ -55,8 +55,8 @@
   bottom=2.0cm,
   footskip=7mm
 }
-\setlength{\parindent}{1.25cm}          % Абзацный отступ
-\linespread{1.0}                        % Межстрочный интервал
+\setlength{\parindent}{1.25cm}          % Абзацный отступ — 1,25 см по СТП п. 2.1.1
+\AtBeginDocument{\fontsize{14pt}{18pt}\selectfont}
 \sloppy                                 % Устранение переполнения строк
 
 % -----------------------------------------------------------------------------
@@ -81,21 +81,21 @@
 % Оформление заголовков 
 % -----------------------------------------------------------------------------
 \titleformat{\chapter}[hang]
-  {\raggedright\bfseries\fontsize{14pt}{14pt}\selectfont}
+  {\raggedright\bfseries\fontsize{14pt}{18pt}\selectfont}
   {\hspace{12.5mm}\thechapter}
   {2mm}
   {}
 \titlespacing*{\chapter}{12.5mm}{-1em}{1\baselineskip}
 
 \titleformat{\section}[hang]
-  {\raggedright\bfseries\fontsize{14pt}{14pt}\selectfont}
+  {\raggedright\bfseries\fontsize{14pt}{18pt}\selectfont}
   {\hspace{12.5mm}\thesection}
   {2mm}
   {}
 \titlespacing*{\section}{12.5mm}{1\baselineskip}{1\baselineskip}
 
 \titleformat{\subsection}[hang]
-  {\raggedright\bfseries\fontsize{14pt}{14pt}\selectfont}
+  {\raggedright\bfseries\fontsize{14pt}{18pt}\selectfont}
   {\hspace{12.5mm}\thesubsection}
   {2mm}
   {}
@@ -132,8 +132,10 @@
 % Настройка отображения листингов кода
 % ---------------------------------------------
 \lstset{
-    basicstyle=\ttfamily\fontsize{12}{12}\selectfont,                % Шрифт и размер
-    commentstyle=\ttfamily\fontsize{12}{12}\selectfont\color{green}, % Комментарии — зелёные
+    basicstyle=\ttfamily\fontsize{12}{14}\selectfont,                % Шрифт и размер
+    commentstyle=\ttfamily\fontsize{12}{14}\selectfont\color{green}, % Комментарии — зелёные
+    keywordstyle=\color{blue},
+    stringstyle=\color{orange},
     xleftmargin=1em,                                                 % Отступ слева
     language=python,                                                 % Язык по умолчанию — Python
     breaklines=true,                                                 % Перенос строк
@@ -146,15 +148,6 @@
     morecomment=[s]{/*}{*/},
     morestring=[b]",
     alsoletter={-},
-}
-
-% Настройка стиля для CSS кода
-\lstset{
-    language=CSS,
-    basicstyle=\ttfamily\small,
-    keywordstyle=\color{blue},
-    commentstyle=\color{gray},
-    stringstyle=\color{orange},
 }
 
 % ---------------------------------------
