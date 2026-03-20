@@ -35,8 +35,15 @@
 \RequirePackage{pdfpages}               % Вставка PDF
 \RequirePackage{listingsutf8}           % Поддержка UTF-8 в листингах
 
-\setmainfont[Ligatures=TeX]{Times New Roman.ttf} % Использовать загруженный шрифт
-
+\setmainfont{TimesNewRoman}[ % Использовать загруженный шрифт (4 файла для разных стилей)
+  Path = ./fonts/,
+  Extension = .ttf,
+  UprightFont = TimesNewRoman,
+  BoldFont = TimesNewRomanBold,
+  ItalicFont = TimesNewRomanItalic,
+  BoldItalicFont = TimesNewRomanBoldItalic
+]
+\raggedbottom % Не растягивать страницы до одинаковой высоты
 % -----------------------------------------------------------------------------
 % Геометрия страницы 
 % -----------------------------------------------------------------------------
