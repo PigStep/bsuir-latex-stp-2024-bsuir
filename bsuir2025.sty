@@ -4,10 +4,10 @@
 % Подключение необходимых пакетов
 % -----------------------------------------------------------------------------
 \RequirePackage[14pt]{extsizes}         % Размер шрифта
-\RequirePackage[T2A]{fontenc}           % Поддержка кириллицы (кодировка)
+\RequirePackage{fontspec}               % Управление шрифтами
 \RequirePackage[utf8]{inputenc}         % UTF-8 ввод
 \RequirePackage{amsmath}                % Переос формул
-\RequirePackage[russianb]{babel}        % Русская локализация 
+\RequirePackage[russian]{babel}         % Русская локализация 
 \RequirePackage{fancyhdr}               % Кастомные колонтитулы
 \RequirePackage{tempora}                % Шрифт Tempora
 \RequirePackage{newtxmath}              % Красивые мат. символы
@@ -25,7 +25,7 @@
 \RequirePackage{chngcntr}               % Управление счётчиками
 \RequirePackage{enumitem}               % Кастомизация списков
 \RequirePackage{titletoc}               % Управление содержанием
-\RequirePackage[footskip=7mm]{geometry} % Геометрия страницы + отступ под №
+\RequirePackage{geometry}               % Геометрия страницы
 \RequirePackage{listings}               % Листинги кода
 \RequirePackage{xcolor}                 % Цвета
 \RequirePackage{ifthen}                 % Условия
@@ -35,6 +35,15 @@
 \RequirePackage{pdfpages}               % Вставка PDF
 \RequirePackage{listingsutf8}           % Поддержка UTF-8 в листингах
 
+\setmainfont{TimesNewRoman}[ % Использовать загруженный шрифт (4 файла для разных стилей)
+  Path = ./fonts/,
+  Extension = .ttf,
+  UprightFont = TimesNewRoman,
+  BoldFont = TimesNewRomanBold,
+  ItalicFont = TimesNewRomanItalic,
+  BoldItalicFont = TimesNewRomanBoldItalic
+]
+\raggedbottom % Не растягивать страницы до одинаковой высоты
 % -----------------------------------------------------------------------------
 % Геометрия страницы 
 % -----------------------------------------------------------------------------
@@ -43,10 +52,11 @@
   left=3cm,
   right=1.5cm,
   top=2cm,
-  bottom=2.7cm
+  bottom=2.0cm,
+  footskip=7mm
 }
 \setlength{\parindent}{1.25cm}          % Абзацный отступ
-\linespread{1.0}                       % Межстрочный интервал
+\linespread{1.0}                        % Межстрочный интервал
 \sloppy                                 % Устранение переполнения строк
 
 % -----------------------------------------------------------------------------
@@ -154,6 +164,16 @@
 % Настройка подписей к рисункам: "Рисунок" с длинным тире и обычной нумерацией
 \captionsetup[figure]{labelformat=default, labelsep=endash, name=Рисунок}
 
+% ---------------------------------------
+% Кастомные команды для вставки таблиц
+% ---------------------------------------
+\counterwithin{table}{chapter}
+% Настройка подписей к таблицам: "Таблица 1.1". Сбрасывает счетчик таблиц для глав (1.1; 2.1; 3.1 ...)
+\captionsetup[table]{labelsep=endash, name=Таблица}
+
+% Настройка подписей формул по главам
+\counterwithin{equation}{chapter}
+
 % ---------------------------------------------
 % Команда для вставки одного изображения с подписью
 % Аргументы:
@@ -198,3 +218,8 @@
   \end{figure}
 }
 
+% Команда для ненумерованных разделов (Введение, Заключение и т.д.)
+\newcommand{\unnumberedchapter}[1]{%
+  \chapter*{\begin{center}#1\end{center}}%
+  \addcontentsline{toc}{chapter}{\hspace*{-1em}#1}%
+}
