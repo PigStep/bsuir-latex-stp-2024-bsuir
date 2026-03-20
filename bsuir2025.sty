@@ -4,10 +4,10 @@
 % Подключение необходимых пакетов
 % -----------------------------------------------------------------------------
 \RequirePackage[14pt]{extsizes}         % Размер шрифта
-\RequirePackage[T2A]{fontenc}           % Поддержка кириллицы (кодировка)
+\RequirePackage{fontspec}               % Управление шрифтами
 \RequirePackage[utf8]{inputenc}         % UTF-8 ввод
 \RequirePackage{amsmath}                % Переос формул
-\RequirePackage[russianb]{babel}        % Русская локализация 
+\RequirePackage[russian]{babel}         % Русская локализация 
 \RequirePackage{fancyhdr}               % Кастомные колонтитулы
 \RequirePackage{tempora}                % Шрифт Tempora
 \RequirePackage{newtxmath}              % Красивые мат. символы
@@ -34,6 +34,8 @@
 \RequirePackage{hyphenat}               % Управление переносами
 \RequirePackage{pdfpages}               % Вставка PDF
 \RequirePackage{listingsutf8}           % Поддержка UTF-8 в листингах
+
+\setmainfont[Ligatures=TeX]{Times New Roman.ttf} % Использовать загруженный шрифт
 
 % -----------------------------------------------------------------------------
 % Геометрия страницы 
