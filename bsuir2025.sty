@@ -55,9 +55,19 @@
   bottom=2.0cm,
   footskip=7mm
 }
+\setlist{                               % Убираем интервалы в списках
+  topsep=0pt,
+  partopsep=0pt,
+  parsep=0pt,
+  itemsep=0.15em,
+}
+\setlength{\parskip}{0pt}               % Убираем интервалы до / после абзаца
+\setlength{\parsep}{0pt}
+\setlength{\topsep}{0pt}
 \setlength{\parindent}{1.25cm}          % Абзацный отступ — 1,25 см по СТП п. 2.1.1
 \AtBeginDocument{\fontsize{14pt}{18pt}\selectfont}
 \sloppy                                 % Устранение переполнения строк
+
 
 % -----------------------------------------------------------------------------
 % Настройка содержания 
