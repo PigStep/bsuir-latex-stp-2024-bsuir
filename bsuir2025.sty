@@ -169,7 +169,13 @@
 % ---------------------------------------
 \counterwithin{figure}{chapter} 
 % Настройка подписей к рисункам: "Рисунок" с длинным тире и обычной нумерацией
-\captionsetup[figure]{labelformat=default, labelsep=endash, name=Рисунок}
+\captionsetup[figure]{
+  labelformat=default,
+  labelsep=endash,
+  name=Рисунок,
+  skip=15pt,                              % отступ между рисунком и подписью
+  belowskip=-8.5pt,                       % отсуп между подписью и текстом
+}
 
 % ---------------------------------------
 % Настройка подписей к таблице
