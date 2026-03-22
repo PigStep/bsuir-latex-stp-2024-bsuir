@@ -242,5 +242,6 @@
 % Команда для ненумерованных разделов (Введение, Заключение и т.д.)
 \newcommand{\unnumberedchapter}[1]{%
   \chapter*{\begin{center}#1\end{center}}%
+  \vspace{-2\baselineskip}%       
   \addcontentsline{toc}{chapter}{\hspace*{-1em}#1}%
 }
