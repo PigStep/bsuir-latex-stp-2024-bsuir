@@ -17,7 +17,9 @@
 \RequirePackage{float}                  % Позиционирование плавающих объектов
 \RequirePackage{etoolbox}               % Расширения LaTeX макросов
 \RequirePackage{longtable}              % Таблицы на несколько страниц
+\RequirePackage{array}                  % Выравнивание таблиц
 \RequirePackage{tabularx}               % Таблицы с автоматической шириной
+\RequirePackage{longtable}              % Длинные таблицы
 \RequirePackage{titlesec}               % Кастомизация заголовков
 \RequirePackage{ragged2e}               % Выравнивание текста
 \RequirePackage{url}                    % Форматирование URL-ов
@@ -169,23 +171,27 @@
 \captionsetup[figure]{labelformat=default, labelsep=endash, name=Рисунок}
 
 % ---------------------------------------
-% Кастомные команды для вставки таблиц
+% Настройка подписей к таблице
 % ---------------------------------------
-\counterwithin{table}{chapter}
-% Настройка подписей к таблицам: "Таблица 1.1". Сбрасывает счетчик таблиц для глав (1.1; 2.1; 3.1 ...)
-% Подпись таблицы — по левому краю без абзацного отступа
-\DeclareCaptionFormat{tableformat}{#1#2#3\par}
-\captionsetup[table]{
+% ---------------------------------------
+\DeclareCaptionFormat{tableformat}{#1#2#3} 
+\renewcommand{\arraystretch}{1.5}       % небольшой отступ между текстом в таблице
+\captionsetup[longtable]{
   labelsep=endash,
   name=Таблица,
   justification=raggedright,
   format=tableformat,
   singlelinecheck=false,
-  indention=0pt,
+  indention=6.3em,                      % Если длинная таблица - перенос по ГОСТ
   hangindent=0pt,
   width=\textwidth,
+  skip=0pt,                             % убирает отступ между caption и таблицей
 }
 
+% Подпись при разрыве страницы
+\newcommand{\longtableheadcontinued}[1]{%
+  \multicolumn{#1}{l}{Продолжение таблицы~\thetable} \\[4pt]%
+}
 % Настройка подписей формул по главам
 \counterwithin{equation}{chapter}
 
