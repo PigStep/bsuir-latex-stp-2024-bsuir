@@ -33,10 +33,10 @@
 \RequirePackage{ifthen}                 % Условия
 \RequirePackage{tocloft}                % Управление оглавлением
 \RequirePackage{microtype}              % Улучшение типографики
-\RequirePackage{hyphenat}               % Управление переносами
 \RequirePackage{pdfpages}               % Вставка PDF
 \RequirePackage{listingsutf8}           % Поддержка UTF-8 в листингах
 \RequirePackage{indentfirst}            % Интервал после заголовка
+\RequirePackage{polyglossia}            % Управление переносами
 
 \setmainfont{TimesNewRoman}[ % Использовать загруженный шрифт (4 файла для разных стилей)
   Path = ./fonts/,
@@ -138,10 +138,8 @@
 % -----------------------------------------------------------------------------
 % Переносы и разрывы строк
 % -----------------------------------------------------------------------------
-\hyphenpenalty=1000    % переносы разрешены, но нежелательны
-\tolerance=2000
-\emergencystretch=3em
-
+\sloppy
+\XeTeXdashbreakstate=0
 % ---------------------------------------------
 % Настройка отображения листингов кода
 % ---------------------------------------------
