@@ -58,12 +58,14 @@
   bottom=2.0cm,
   footskip=7mm
 }
-\setlist{                               % Убираем интервалы в списках
-  topsep=0pt,
-  partopsep=0pt,
-  parsep=0pt,
-  itemsep=0.15em,
+\setlist[itemize]{                      % Корректно формтируем списки
+  wide=1.25cm,
+  leftmargin=0pt,
+  label=--,
+  labelsep=0.5em,
+  nosep,
 }
+
 \setlength{\parskip}{0pt}               % Убираем интервалы до / после абзаца
 \setlength{\parsep}{0pt}
 \setlength{\topsep}{0pt}
