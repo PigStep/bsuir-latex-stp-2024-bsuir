@@ -17,7 +17,9 @@
 \RequirePackage{float}                  % Позиционирование плавающих объектов
 \RequirePackage{etoolbox}               % Расширения LaTeX макросов
 \RequirePackage{longtable}              % Таблицы на несколько страниц
+\RequirePackage{array}                  % Выравнивание таблиц
 \RequirePackage{tabularx}               % Таблицы с автоматической шириной
+\RequirePackage{longtable}              % Длинные таблицы
 \RequirePackage{titlesec}               % Кастомизация заголовков
 \RequirePackage{ragged2e}               % Выравнивание текста
 \RequirePackage{url}                    % Форматирование URL-ов
@@ -31,9 +33,10 @@
 \RequirePackage{ifthen}                 % Условия
 \RequirePackage{tocloft}                % Управление оглавлением
 \RequirePackage{microtype}              % Улучшение типографики
-\RequirePackage{hyphenat}               % Управление переносами
 \RequirePackage{pdfpages}               % Вставка PDF
 \RequirePackage{listingsutf8}           % Поддержка UTF-8 в листингах
+\RequirePackage{indentfirst}            % Интервал после заголовка
+\RequirePackage{polyglossia}            % Управление переносами
 
 \setmainfont{TimesNewRoman}[ % Использовать загруженный шрифт (4 файла для разных стилей)
   Path = ./fonts/,
@@ -55,13 +58,26 @@
   bottom=2.0cm,
   footskip=7mm
 }
+\setlist[itemize]{                      % Корректно формтируем списки
+  wide=1.25cm,
+  leftmargin=0pt,
+  label=--,
+  labelsep=0.5em,
+  nosep,
+}
+
+\setlength{\parskip}{0pt}               % Убираем интервалы до / после абзаца
+\setlength{\parsep}{0pt}
+\setlength{\topsep}{0pt}
 \setlength{\parindent}{1.25cm}          % Абзацный отступ — 1,25 см по СТП п. 2.1.1
 \AtBeginDocument{\fontsize{14pt}{18pt}\selectfont}
 \sloppy                                 % Устранение переполнения строк
 
+
 % -----------------------------------------------------------------------------
 % Настройка содержания 
 % -----------------------------------------------------------------------------
+\renewcommand{\cftdotsep}{2}                                                    % Фиксированный шаг между точками (подберите 1–3)
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}                          % Точки между разделом и №
 \renewcommand{\cfttoctitlefont}{\hspace{0.38\textwidth}\bfseries\MakeUppercase} % Центрирование и капс
 \renewcommand{\cftaftertoctitle}{\hfill}                                        % Выравнивание по правому краю
@@ -72,8 +88,8 @@
 \setlength{\cftsecindent}{0cm}                                                  % Отступы в секции
 \setlength{\cftsubsecindent}{1em}                                               % Отступы в пункте
 \setlength{\cftchapnumwidth}{1em}                                               % Ширина под номер
-\setlength{\cftsecnumwidth}{2em}                                                % Ширина под номер
-\setlength{\cftsubsecnumwidth}{3em}                                             % Ширина под номер
+\setlength{\cftsecnumwidth}{1.5em}                                              % Ширина под номер
+\setlength{\cftsubsecnumwidth}{1em}                                             % Ширина под номер
 \renewcommand{\cftsecaftersnum}{\hspace{0.5em}}                                 % Пробел после номера
 \renewcommand{\cftsubsecaftersnum}{\hspace{0.5em}}                              % Пробел после номера
 
@@ -124,10 +140,8 @@
 % -----------------------------------------------------------------------------
 % Переносы и разрывы строк
 % -----------------------------------------------------------------------------
-\hyphenpenalty=10000                     % Запрет переносов
-\tolerance=10000                         % Максимальная терпимость к разрывам
-\pretocmd{\tableofcontents}{\sloppy}{}{} % Применение \sloppy к оглавлению
-
+\sloppy
+\XeTeXdashbreakstate=0
 % ---------------------------------------------
 % Настройка отображения листингов кода
 % ---------------------------------------------
@@ -155,15 +169,36 @@
 % ---------------------------------------
 \counterwithin{figure}{chapter} 
 % Настройка подписей к рисункам: "Рисунок" с длинным тире и обычной нумерацией
-\captionsetup[figure]{labelformat=default, labelsep=endash, name=Рисунок}
+\captionsetup[figure]{
+  labelformat=default,
+  labelsep=endash,
+  name=Рисунок,
+  skip=15pt,                              % отступ между рисунком и подписью
+  belowskip=-8.5pt,                       % отсуп между подписью и текстом
+}
 
 % ---------------------------------------
-% Кастомные команды для вставки таблиц
+% Настройка подписей к таблице
 % ---------------------------------------
-\counterwithin{table}{chapter}
-% Настройка подписей к таблицам: "Таблица 1.1". Сбрасывает счетчик таблиц для глав (1.1; 2.1; 3.1 ...)
-\captionsetup[table]{labelsep=endash, name=Таблица}
+% ---------------------------------------
+\DeclareCaptionFormat{tableformat}{#1#2#3} 
+\renewcommand{\arraystretch}{1.5}       % небольшой отступ между текстом в таблице
+\captionsetup[longtable]{
+  labelsep=endash,
+  name=Таблица,
+  justification=raggedright,
+  format=tableformat,
+  singlelinecheck=false,
+  indention=6.3em,                      % Если длинная таблица - перенос по ГОСТ
+  hangindent=0pt,
+  width=\textwidth,
+  skip=0pt,                             % убирает отступ между caption и таблицей
+}
 
+% Подпись при разрыве страницы
+\newcommand{\longtableheadcontinued}[1]{%
+  \multicolumn{#1}{l}{Продолжение таблицы~\thetable} \\%
+}
 % Настройка подписей формул по главам
 \counterwithin{equation}{chapter}
 
@@ -212,7 +247,8 @@
 }
 
 % Команда для ненумерованных разделов (Введение, Заключение и т.д.)
-\newcommand{\unnumberedchapter}[1]{%
-  \chapter*{\begin{center}#1\end{center}}%
-  \addcontentsline{toc}{chapter}{\hspace*{-1em}#1}%
+\newcommand{\unnumberedchapter}[2][]{%
+  \chapter*{\begin{center}#2\end{center}}%
+  \vspace{-1.3\baselineskip}%       
+  \addcontentsline{toc}{chapter}{\hspace*{-1em}\ifx&#1&\relax#2\else#1\fi}%
 }
