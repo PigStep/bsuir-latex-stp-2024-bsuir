@@ -1,0 +1,19 @@
+% -----------------------------------------------------------------------------
+% Настройка маркера 60% 
+% -----------------------------------------------------------------------------
+
+% Создаем переключатель
+\newif\ifshowgost
+\showgostfalse % Включить: \showgosttrue | Выключить: \showgostfalse
+
+\ifshowgost
+  \AtBeginShipout{\AtBeginShipoutUpperLeft{
+    \begin{tikzpicture}[remember picture, overlay]
+      % Линия на уровне 60% высоты текста (отсчет сверху вниз)
+      \draw[red, thick, dashed] 
+        ([yshift=-0.6\textheight]current page text area.north west) -- 
+        ([yshift=-0.6\textheight]current page text area.north east)
+        node[right, font=\tiny] {ГОСТ 60\%};
+    \end{tikzpicture}
+  }}
+\fi
