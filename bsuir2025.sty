@@ -257,3 +257,39 @@
   \vspace{-1.3\baselineskip}%       
   \addcontentsline{toc}{chapter}{\hspace*{-1em}\ifx&#1&\relax#2\else#1\fi}%
 }
+
+% -----------------------------------------------------------------------------
+% Окружение для пояснений к формуле
+% Пример использования:
+%   \begin{wherelist}
+%     \whereitem{p_i}{персонализированная цена для потребителя $i$;}
+%     \whereitem{c_i}{издержки фирмы на единицу товара для потребителя $i$;}
+%     \whereitem{x_i(p_i)}{спрос (объём покупок) при данной цене $p_i$.}
+%   \end{wherelist}
+% -----------------------------------------------------------------------------
+\newlength{\@wherebaseindent}
+\newlength{\@wherewordwidth}
+\newlength{\@whereitemdent}
+\newif\if@wherelistfirst
+
+\newenvironment{wherelist}{%
+  \par\noindent
+  \setlength{\@wherebaseindent}{\parindent}%
+  \settowidth{\@wherewordwidth}{где }%
+  \setlength{\@whereitemdent}{\@wherebaseindent}%
+  \addtolength{\@whereitemdent}{\@wherewordwidth}%
+  \@wherelistfirsttrue
+}{%
+  \par%
+}
+
+\newcommand{\whereitem}[2]{%
+  \if@wherelistfirst
+    \par\noindent\hangindent=0pt\hangafter=1%
+    \hspace{\@wherebaseindent}где $#1$ -- #2%
+    \@wherelistfirstfalse
+  \else
+    \par\noindent\hangindent=0pt\hangafter=1%
+    \hspace{\@whereitemdent}$#1$ -- #2%
+  \fi
+}
